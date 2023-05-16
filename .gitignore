@@ -1,0 +1,6 @@
+# Jetbrains
+.idea/
+
+# Dist
+bin/
+dist/
