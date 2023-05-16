@@ -11,6 +11,12 @@
 - https://play.google.com/store/apps/details?id=com.catchingnow.np
 - https://store.lizhi.io/site/products/id/316
 
+# Dismiss Time
+
+```shell
+defaults write com.apple.notificationcenterui bannerTime -int 30
+```
+
 ## Screenshot
 
 ![screenshot](./docs/app.jpg)
