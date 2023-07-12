@@ -9,7 +9,7 @@ BITTAGS :=
 LDFLAGS := -s -w
 LDFLAGS += -X "github.com/starudream/go-lib/constant.VERSION=$(VERSION)"
 LDFLAGS += -X "github.com/starudream/go-lib/constant.BIDTIME=$(BIDTIME)"
-LDFLAGS += -X "github.com/starudream/go-lib/constant.NAME="
+LDFLAGS += -X "github.com/starudream/go-lib/constant.NAME=notify-mac-webhook"
 LDFLAGS += -X "github.com/starudream/go-lib/constant.PREFIX="
 
 .PHONY: bin

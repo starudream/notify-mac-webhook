@@ -4,3 +4,6 @@
 # Dist
 bin/
 dist/
+
+# Config
+config.yaml
