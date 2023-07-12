@@ -13,7 +13,7 @@ import (
 var server *http.Server
 
 func start(context.Context) error {
-	router.Handle(http.MethodGet, "/_health", func(c *router.Context) { c.OK("ok") })
+	router.Handle(http.MethodGet, "/_health", func(c *router.Context) { c.OK() })
 	router.Handle(http.MethodGet, "/", handler)
 	router.Handle(http.MethodPost, "/", handler)
 

@@ -2,7 +2,9 @@ module github.com/starudream/notify-mac-webhook
 
 go 1.20
 
-require github.com/starudream/go-lib v1.13.0
+//replace github.com/starudream/go-lib => ../go-lib
+
+require github.com/starudream/go-lib v1.13.1
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
