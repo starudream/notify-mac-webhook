@@ -1,8 +1,6 @@
 package main
 
 import (
-	"net/http"
-
 	"github.com/starudream/go-lib/log"
 	"github.com/starudream/go-lib/router"
 )
@@ -26,24 +24,26 @@ func handler(c *router.Context) {
 		return
 	}
 
-	_, err = Notifier(NotifierReq{
-		Data:     v,
-		Title:    v.AndroidTitle,
-		SubTitle: v.FilterboxFieldAppName + "(" + v.FilterboxFieldPackageName + ")",
-		Message: func() string {
-			if v.AndroidBigText != "" && v.AndroidBigText != "{android.bigText}" {
-				return v.AndroidBigText
-			} else if v.AndroidText != "" {
-				return v.AndroidText
-			} else {
-				return "空"
-			}
-		}(),
-	})
-	if err != nil {
-		log.Error().Msgf("notify error: %v", err)
-		return
-	}
+	go func() {
+		r, e := Notify(c.GetHeader("X-Request-ID"), NotifyReq{
+			Data:     v,
+			Title:    v.AndroidTitle,
+			SubTitle: v.FilterboxFieldAppName + "(" + v.FilterboxFieldPackageName + ")",
+			Message: func() string {
+				if v.AndroidBigText != "" && v.AndroidBigText != "{android.bigText}" {
+					return v.AndroidBigText
+				} else if v.AndroidText != "" {
+					return v.AndroidText
+				} else {
+					return "空"
+				}
+			}(),
+		})
+		if e != nil {
+			log.Error().Msgf("notify error: %v, stdout: %s, stderr: %s", e, r.Stdout, r.Stderr)
+			return
+		}
+	}()
 
-	c.String(http.StatusOK, "ok")
+	c.OK()
 }
