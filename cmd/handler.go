@@ -24,20 +24,25 @@ func handler(c *router.Context) {
 		return
 	}
 
+	if v.AndroidTitle == "{android.title}" {
+		v.AndroidTitle = ""
+	}
+	if v.AndroidBigText == "{android.bigText}" {
+		v.AndroidBigText = ""
+	}
+	if v.AndroidText == "{android.text}" {
+		v.AndroidText = ""
+	}
+	if v.AndroidBigText == "" && v.AndroidText == "" {
+		return
+	}
+
 	go func() {
 		r, e := Notify(c.GetHeader("X-Request-ID"), NotifyReq{
 			Data:     v,
 			Title:    v.AndroidTitle,
 			SubTitle: v.FilterboxFieldAppName + "(" + v.FilterboxFieldPackageName + ")",
-			Message: func() string {
-				if v.AndroidBigText != "" && v.AndroidBigText != "{android.bigText}" {
-					return v.AndroidBigText
-				} else if v.AndroidText != "" {
-					return v.AndroidText
-				} else {
-					return "空"
-				}
-			}(),
+			Message:  ternary(v.AndroidBigText != "", v.AndroidBigText, v.AndroidText),
 		})
 		if e != nil {
 			log.Error().Msgf("notify error: %v, stdout: %s, stderr: %s", e, r.Stdout, r.Stderr)
@@ -46,4 +51,11 @@ func handler(c *router.Context) {
 	}()
 
 	c.OK()
+}
+
+func ternary[T any](condition bool, ifOutput T, elseOutput T) T {
+	if condition {
+		return ifOutput
+	}
+	return elseOutput
 }
