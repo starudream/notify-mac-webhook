@@ -45,7 +45,9 @@ func Notify(id string, req NotifyReq) (resp NotifyResp, err error) {
 	args = append(args, "-timeout", "30")
 	args = append(args, "-actions", "Close")
 
-	defer tmp(req, resp)
+	defer func() { tmp(req, resp) }()
+
+	log.Info().Msgf("alerter %#v", args)
 
 	cmd := exec.Command("alerter", args...)
 

@@ -4,7 +4,7 @@ go 1.20
 
 //replace github.com/starudream/go-lib => ../go-lib
 
-require github.com/starudream/go-lib v1.13.1
+require github.com/starudream/go-lib v1.13.5
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
