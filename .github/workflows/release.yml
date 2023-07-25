@@ -2,6 +2,7 @@ name: Release
 
 permissions:
   contents: write
+  packages: write
 
 on:
   push:
@@ -13,16 +14,13 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Setup Go
-        uses: actions/setup-go@v4
+      - uses: actions/setup-go@v4
         with:
           go-version: stable
-      - name: Release
-        uses: goreleaser/goreleaser-action@v4
+      - uses: goreleaser/goreleaser-action@v4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:

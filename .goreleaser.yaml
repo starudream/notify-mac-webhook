@@ -8,9 +8,6 @@ before:
 snapshot:
   name_template: "{{ .Version }}-next"
 
-#gomod:
-#  proxy: true
-
 report_sizes: true
 
 builds:
@@ -28,6 +25,9 @@ builds:
       - -X "github.com/starudream/go-lib/constant.BIDTIME={{ .Date }}"
       - -X "github.com/starudream/go-lib/constant.NAME=notify-mac-webhook"
       - -X "github.com/starudream/go-lib/constant.PREFIX="
+
+upx:
+  - enabled: true
 
 archives:
   - format: tar.gz
